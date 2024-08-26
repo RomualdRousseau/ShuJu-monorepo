@@ -15,7 +15,6 @@ import org.junit.Test;
 import com.github.romualdrousseau.shuju.preprocessing.Text;
 import com.github.romualdrousseau.shuju.preprocessing.comparer.RegexComparer;
 
-
 public class Test_Text {
 
     private Map<String, String> patterns;

@@ -3,12 +3,10 @@ package com.github.romualdrousseau.shuju.json;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 import org.reflections.Reflections;
 
@@ -111,46 +109,26 @@ public class JSON {
         JSON.Factory.saveObject(o, filePath, pretty);
     }
 
-    public static <T> Stream<T> streamOf(final Object a, final String q) {
-        return JSON.<T>query(a, q)
-                .filter(o -> o instanceof JSONArray)
-                .map(o -> JSON.<T>streamOf((JSONArray) o))
-                .orElse(Stream.empty());
-    }
-
-    public static <T> Stream<T> streamOf(final JSONArray a) {
-        Iterable<T> it = new Iterable<T>() {
-            @Override
-            public Iterator<T> iterator() {
-                return new Iterator<T>() {
-                    private int idx = 0;
-
-                    @Override
-                    public boolean hasNext() {
-                        return idx < a.size();
-                    }
-
-                    @Override
-                    public T next() {
-                        return a.get(idx++);
-                    }
-                };
-            }
-        };
-        return StreamSupport.stream(it.spliterator(), false);
-    }
-
     @SuppressWarnings("unchecked")
     public static <T> Optional<T> query(final Object a, final String q) {
         Object curr = a;
         for(String token: Arrays.asList(q.split("\\."))) {
             if (curr instanceof JSONArray) {
                 int i = Integer.parseInt(token);
-                curr = ((JSONArray) curr).get(i);
+                curr = ((JSONArray) curr).get(i).orElse(null);
             } else if (curr instanceof JSONObject) {
-                curr = ((JSONObject) curr).get(token).get();
+                curr = ((JSONObject) curr).get(token).orElse(null);
+            } else {
+                curr = null;
             }
         }
         return Optional.ofNullable((T) curr);
+    }
+
+    public static <T> Stream<T> queryStream(final Object a, final String q) {
+        return JSON.<T>query(a, q)
+                .filter(o -> o instanceof JSONArray)
+                .map(o -> ((JSONArray) o).<T>stream())
+                .orElse(Stream.empty());
     }
 }

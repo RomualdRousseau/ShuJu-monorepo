@@ -1,44 +1,45 @@
-
 package com.github.romualdrousseau.shuju.json;
 
+import java.util.Iterator;
+import java.util.Optional;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
+
 public interface JSONArray {
+
     int size();
 
-    <T> T get(int i);
+    <T> Optional<T> get(int i);
 
-    void set(int i, Object o);
+    <T> JSONArray set(int i, T o);
 
-    int getInt(int s);
+    <T> JSONArray append(T o);
 
-    void setInt(int i, int n);
+    JSONArray remove(int i);
 
-    float getFloat(int i);
+    String toString(final boolean pretty);
 
-    void setFloat(int i, float f);
+    String toString();
 
-    String getString(int i);
+    default <T> Stream<T> stream() {
+        Iterable<T> it = new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return new Iterator<T>() {
+                    private int idx = 0;
 
-    void setString(int i, String s);
+                    @Override
+                    public boolean hasNext() {
+                        return idx < JSONArray.this.size();
+                    }
 
-    JSONArray getArray(int i);
-
-    void setArray(int i, JSONArray f);
-
-    JSONObject getObject(int i);
-
-    void setOject(int i, JSONObject o);
-
-    void append(int i );
-
-    void append(float f);
-
-    void append(String s);
-
-    void append(JSONArray a);
-
-    void append(JSONObject o);
-
-    void append(Object o);
-
-    void remove(int i);
+                    @Override
+                    public T next() {
+                        return JSONArray.this.<T>get(idx++).get();
+                    }
+                };
+            }
+        };
+        return StreamSupport.stream(it.spliterator(), false);
+    }
 }

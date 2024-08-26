@@ -13,7 +13,7 @@ public class ShingleTokenizer implements Text.ITokenizer {
 
     private static final int MIN_SIZE = 2;
 
-    private static final ThreadLocal<Pattern> CAMEL_PATTERN = new ThreadLocal<>() {
+    private static final ThreadLocal<Pattern> CAMEL_PATTERN = new ThreadLocal<Pattern>() {
         @Override
         protected Pattern initialValue() {
             return Pattern.compile("(?<!(^|[A-Z/]))(?=[A-Z/])|(?<!^)(?=[A-Z/][a-z/])");
