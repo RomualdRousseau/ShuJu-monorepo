@@ -16,35 +16,35 @@ all: initialize test build
 
 # Initializatize maven
 initialize:
-    mvn initialize --also-make
+    mvn initialize
 
 # Clean
 clean:
-    mvn clean --also-make
+    mvn clean
 
 # Build
 build:
-    mvn -DskipTests package --also-make
+    mvn -DskipTests package
 
 # Run the tests
 test:
-    mvn -Dtest=UnitTestSuite -Dsurefire.failIfNoSpecifiedTests=false test --also-make
+    mvn -Dtest=UnitTestSuite -Dsurefire.failIfNoSpecifiedTests=false test
 
 # Run all tests
 test-full:
-    mvn -Dtest=UnitFullTestSuite -Dsurefire.failIfNoSpecifiedTests=false test --also-make
+    mvn -Dtest=UnitFullTestSuite -Dsurefire.failIfNoSpecifiedTests=false test
 
 # Install in the local repository
 install:
-	mvn -DskipTests install --also-make
+	mvn -DskipTests install
 
 # Deploy snapshot to the maven repository
 deploy-snapshot:
-	mvn clean deploy -DskipTests -P snapshot --also-make
+	mvn clean deploy -DskipTests -P snapshot
 
 # Deploy release to the maven repository
 deploy-release:
-	mvn clean deploy -DskipTests -P release --also-make
+	mvn clean deploy -DskipTests -P release
 
 # Prepape a new version
 prepare-version *args='':
