@@ -6,7 +6,7 @@
 
     <groupId>com.github.romualdrousseau</groupId>
     <artifactId>shuju-monorepo</artifactId>
-    <version>1.29-SNAPSHOT</version>
+    <version>1.30-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>shuju-monorepo</name>

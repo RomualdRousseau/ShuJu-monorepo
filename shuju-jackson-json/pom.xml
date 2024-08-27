@@ -2,13 +2,13 @@
     <parent>
         <groupId>com.github.romualdrousseau</groupId>
         <artifactId>shuju-monorepo</artifactId>
-        <version>1.29-SNAPSHOT</version>
+        <version>1.30-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.romualdrousseau</groupId>
     <artifactId>shuju-jackson-json</artifactId>
-    <version>1.29-SNAPSHOT</version>
+    <version>1.30-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>shuju-jackson-json</name>
